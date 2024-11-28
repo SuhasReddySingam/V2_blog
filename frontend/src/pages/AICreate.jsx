@@ -1,5 +1,5 @@
 import { Box, Button,  Container, Heading, Input,  useToast, VStack,Text,Textarea,HStack,Stack,Skeleton,SkeletonCircle,SkeletonText} from "@chakra-ui/react";
-import React,{ useState,Component} from "react";
+import React,{ useState,Component, useRef} from "react";
 import { useProductStore } from "../store/product";
 import Navbar from "../components/Navbar";
 import { motion } from "framer-motion";
@@ -13,7 +13,8 @@ const CreatePage = () => {
 	const[style,setStyle]=useState("Professional");
 	const [userReq,setUserReq]=useState("");
 	const [summary,setSummary]=useState("");
-	const [output,setOutput]=useState();
+	const [out,setOutput]=useState();
+	const rout=useRef()
 	const toast = useToast();
 	const [isLoading,setIsLoading]=useState(false);
 	const textColor = "gray.200";
@@ -44,11 +45,12 @@ const CreatePage = () => {
 				setIsLoading(false);
 				currentOutput += output.generated_text;
 				setOutput(currentOutput);
+				setBlog({...blog,body:currentOutput});
 			}
 		}
 	  
 		
-		console.log(output);
+		console.log(out);
 		console.log(user.name);
 		console.log(newPrompt);
 	  };
@@ -65,7 +67,6 @@ const CreatePage = () => {
 		  setUserReq("");
 	}
 	const saveBlog= async () =>{
-		setBlog({...blog,body:output});
 		const { success, message } = await createProduct(blog)
 				if (!success) {
 					toast({
@@ -148,10 +149,10 @@ const CreatePage = () => {
 		
 		<Box w={"full"}  p={6} rounded={"lg"} shadow={"md"} borderStyle={"groove"} bg={bg}>
 
-						{output !== undefined && (
+						{out !== undefined && (
 							<VStack spacing={9}>
 					<Text fontWeight='semi-bold' fontSize='lg' color={textColor} mb={4} whiteSpace="pre-line" >
-						{output}
+						{out}
 
 						<motion.button
 						whileHover={{ scale: 1.02 }}
