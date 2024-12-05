@@ -19,6 +19,11 @@ import {
 	useDisclosure,
 	useToast,
 	VStack,
+	Textarea,
+	Editable,
+	EditableTextarea,
+	EditablePreview,
+	EditableInput
 } from "@chakra-ui/react";
 import { useProductStore } from "../store/product";
 import { useState } from "react";
@@ -116,7 +121,7 @@ const ProductCard = ({ product }) => {
 				</HStack>
 			</Box>
 
-			<Modal isOpen={isOpen} onClose={onClose}>
+			<Modal isOpen={isOpen} onClose={onClose} size={'full'}>
 				<ModalOverlay />
 
 				<ModalContent>
@@ -124,25 +129,23 @@ const ProductCard = ({ product }) => {
 					<ModalCloseButton />
 					<ModalBody>
 						<VStack spacing={4}>
-							<Input
-								placeholder='Title'
+							<Input whiteSpace="pre-line"
+								defaultValue={product.title}
 								name='name'
 								value={updatedProduct.name}
 								onChange={(e) => setUpdatedProduct({ ...updatedProduct, title: e.target.value })}
 							/>
-							<Input
-								placeholder='Authour'
-								name='price'
-								type='number'
-								value={updatedProduct.price}
-								onChange={(e) => setUpdatedProduct({ ...updatedProduct, authour: e.target.value })}
+							<Textarea
+							name='image'
+							defaultValue={product.body}
+							bg={"gray.700"}
+							variant={"outline"}
+							height={"80vh"}
+							fontWeight={"medium"}
+							value={updateProduct.image}
+							onChange={(e) => setUpdatedProduct({ ...updatedProduct, body: e.target.value })}
 							/>
-							<Input
-								placeholder='Body'
-								name='image'
-								value={updatedProduct.image}
-								onChange={(e) => setUpdatedProduct({ ...updatedProduct, body: e.target.value })}
-							/>
+							
 						</VStack>
 					</ModalBody>
 

@@ -11,16 +11,17 @@ const CreatePage = () => {
     const { user }=useAuthStore();
     const [newPrompt,setNewPrompt]=useState("");
 	const[style,setStyle]=useState("Professional");
+	const[limit,setLimit]=useState("500words");
 	const [userReq,setUserReq]=useState("");
 	const [summary,setSummary]=useState("");
 	const [out,setOutput]=useState();
-	const rout=useRef()
+	const[title,setTitle]=useState("");
 	const toast = useToast();
 	const [isLoading,setIsLoading]=useState(false);
 	const textColor = "gray.200";
 	const bg = "gray.900";
 	const [blog,setBlog]=useState({
-		title:"Made with blogger",
+		title:"Made with Blogger",
 		authour:user.name,
 		body:""
 	})
@@ -30,15 +31,27 @@ const CreatePage = () => {
 	const handleStyle=(event)=>{
 		setStyle(event.target.value);
 	}
+	const handleLimt=(event)=>{
+		setLimit(event.target.value);
+	}
 
 	const makeBlog = async () => {
 		setOutput("");
 		setIsLoading(true);
-		let currentOutput = "";
-	  
+		let currentTitle = "";
+		for await (const output of inference.textGenerationStream({
+			model: model,
+			inputs: "Generate a title for a blog post which is relevant to the following "+newPrompt+".Generate only a single title",
+			parameters: { max_new_tokens: 50, return_full_text: false }
+		  })) {
+			  if(output.generated_text!=null){
+				  currentTitle += output.generated_text;
+			  }
+		  }
+		let currentOutput="";
 		for await (const output of inference.textGenerationStream({
 		  model: model,
-		  inputs: newPrompt+" in a "+style+" style.",
+		  inputs: currentTitle+".This is the title for a blog post now generate a blog post which is suitable for this title,in a "+style+"writing style within "+limit+" words",
 		  parameters: { max_new_tokens: 800, return_full_text: false }
 		})) {
 			if(output.generated_text!=null){
@@ -48,8 +61,6 @@ const CreatePage = () => {
 				setBlog({...blog,body:currentOutput});
 			}
 		}
-	  
-		
 		console.log(out);
 		console.log(user.name);
 		console.log(newPrompt);
@@ -67,6 +78,7 @@ const CreatePage = () => {
 		  setUserReq("");
 	}
 	const saveBlog= async () =>{
+		console.log(blog)
 		const { success, message } = await createProduct(blog)
 				if (!success) {
 					toast({
@@ -135,6 +147,29 @@ const CreatePage = () => {
 			<div class="flex items-center ps-4 border border-gray-200 rounded dark:border-gray-700">
     			<input id="bordered-radio-1" type="radio" value="Casual"  class="w-4 h-3  bg-gray-100 border-gray-300ing-blue-600" checked={style==="Casual"} onChange={handleStyle} />
     			<label for="bordered-radio-1" class="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">🙍‍♂️ Casual</label>
+			</div>
+			<div class="flex items-center ps-4 border border-gray-200 rounded dark:border-gray-700">
+    			<input id="bordered-radio-1" type="radio" value="Engaging"  class="w-4 h-3  bg-gray-100 border-gray-300ing-blue-600" checked={style==="Engaging"} onChange={handleStyle} />
+    			<label for="bordered-radio-1" class="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">📝 Engaging</label>
+			</div>
+				</HStack>
+				<br/>
+				<h1 className="font-bold text-2xl">Select a wordlimit</h1>
+				<br/>
+				<HStack>
+
+			<div class="flex items-center ps-4 border border-gray-200 rounded dark:border-gray-700">
+    			<input id="bordered-radio-1" type="radio" value="500 words"  class="w-4 h-3 bg-gray-100 border-gray-300" checked={limit==="500 words"} onChange={handleLimt} />
+    			<label for="bordered-radio-1" class="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">500 words</label>
+			</div>
+				
+			<div class="flex items-center ps-4 border border-gray-200 rounded dark:border-gray-700">
+    			<input id="bordered-radio-1" type="radio" value="700 words"  class="w-4 h-3  bg-gray-100 border-gray-300ing-blue-600" checked={limit==="700 words"} onChange={handleLimt} />
+    			<label for="bordered-radio-1" class="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">700 words</label>
+			</div>
+			<div class="flex items-center ps-4 border border-gray-200 rounded dark:border-gray-700">
+    			<input id="bordered-radio-1" type="radio" value="1000 words"  class="w-4 h-3  bg-gray-100 border-gray-300ing-blue-600" checked={limit==="1000 words"} onChange={handleLimt} />
+    			<label for="bordered-radio-1" class="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">1000 words</label>
 			</div>
 				</HStack>
 				<br/>

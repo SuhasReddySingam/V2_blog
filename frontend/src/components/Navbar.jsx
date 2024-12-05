@@ -79,8 +79,8 @@ const Navbar = () => {
 						Create a Blog with AI
 					</Link>
 					<br/>
-					<Link to={"/create-norm"} className='text-blue-400 hover:underline'>
-						Create a Blog
+					<Link to={"https://linktr.ee/suhasreddysingam"} className='text-blue-400 hover:underline' target="_blank">
+						Contact us
 					</Link>
 					<br/>
 		  <Link to={`/view/${user.name}`} className='text-blue-400 hover:underline'>
