@@ -111,7 +111,7 @@ const ProductCard = ({ product }) => {
 					</Center>
 				</Text>
 
-				<HStack spacing={1123}>
+				<HStack spacing={5}>
 					<IconButton icon={<EditIcon />} onClick={onOpen} colorScheme='blue' />
 					<IconButton
 						icon={<DeleteIcon />}

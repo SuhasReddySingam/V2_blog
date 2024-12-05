@@ -2,6 +2,7 @@ import { Button, Container, Flex, HStack, Text, useColorMode, useDisclosure } fr
 import { Link } from "react-router-dom";
 import { FaRobot } from "react-icons/fa";
 import { formatDate } from "../utils/date";
+import { motion } from "framer-motion";
 import {
 	Drawer,
 	DrawerBody,
@@ -19,6 +20,7 @@ const Navbar = () => {
 	const { isOpen, onOpen, onClose } = useDisclosure()
     const btnRef = useRef();
 	const { user, logout } = useAuthStore();
+	const { isAuthenticated} = useAuthStore();
 
 	const handleLogout = () => {
 		logout();
@@ -45,11 +47,11 @@ const Navbar = () => {
 					bgGradient={"linear(to-r, cyan.400, blue.500)"}
 					bgClip={"text"}
 				>
-					<Link to={"/"}>Blogger</Link>
+					<Link to={"/"}>BlogWiz</Link>
 				</Text>
 
-				<HStack spacing={5} alignItems={"center"}>
-					<Link to={"/create"}>
+				<HStack spacing={3} alignItems={"center"}>
+					<Link style={{ width: "100%", display: 'flex', justifyContent: 'center' }} to={"/create"}>
 						<Button>
 						<FaRobot />
 						</Button>
@@ -59,7 +61,20 @@ const Navbar = () => {
 							<PlusSquareIcon fontSize={20} />
 						</Button>
 					</Link>
-					<Avatar name={user.name[0]} ref={btnRef} colorScheme='teal' onClick={onOpen} className="hover:cursor-pointer"/>
+					{isAuthenticated===true&&(
+						<Avatar name={user.name[0]} ref={btnRef} colorScheme='teal' onClick={onOpen} className="hover:cursor-pointer" />
+					)}
+					{isAuthenticated===false&&(
+						<Link to={'/signup'} style={{ width: "100%", display: 'flex', justifyContent: 'center' }} >
+						<motion.button
+						whileHover={{ scale: 1.02 }}
+						whileTap={{ scale: 0.98 }}
+						className='w-full h-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-bold rounded-lg shadow-lg hover:from-indigo-600 hover:to-blue-700 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-gray-900 transition duration-200' >
+                            Sign up
+						</motion.button>
+						</Link>
+					)}
+					{/* <Avatar name={user.name[0]} ref={btnRef} colorScheme='teal' onClick={onOpen} className="hover:cursor-pointer" /> */}
 
       				<Drawer
         isOpen={isOpen}

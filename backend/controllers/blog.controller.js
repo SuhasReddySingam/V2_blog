@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 import Product from "../models/product.model.js";
+import {HfInference} from '@huggingface/inference';
+// const inference=new HfInference(import.meta.env.VITE_API_KEY);
 export const getProducts = async (req, res) => {
 	const { name } = req.params;
 	try {
@@ -61,3 +63,23 @@ export const deleteProduct = async (req, res) => {
 		res.status(500).json({ success: false, message: "Server Error" });
 	}
 };
+export const makeBlog = async (req,res) => {
+	let currentTitle = "";
+	for await (const output of inference.textGenerationStream({
+		model: model,
+		inputs: "Generate a title for a blog post which is relevant to the following "+newPrompt+".Generate only a single title",
+		parameters: { max_new_tokens: 50, return_full_text: false }
+	  })) {
+		  if(output.generated_text!=null){
+			  currentTitle += output.generated_text;
+		  }
+	  }
+	let currentOutput="";
+	for await (const output of inference.textGenerationStream({
+	  model: model,
+	  inputs: currentTitle+".This is the title for a blog post now generate a blog post which is suitable for this title,in a "+style+"writing style within "+limit+" words",
+	  parameters: { max_new_tokens: 800, return_full_text: false }
+	})) {
+		res.status(500).json({success:true,message:output.generated_text})
+	}
+  };

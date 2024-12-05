@@ -102,7 +102,7 @@ const CreatePage = () => {
 
 	return (
 		<div>
-		<Box minH={"100vh"} bg={"gray.900"} minW={"100vh"}>
+		<Box minH={"100vh"} bg={"gray.900"} minW={{lg:"100vh",sm:"50vh",md:"70vh"}}>
 		<Navbar />
 		<Box
 			shadow='lg'
@@ -118,9 +118,9 @@ const CreatePage = () => {
 		<VStack>
 		<Container maxW={"container.lg"}>
 			<VStack spacing={8}>
-				<Heading as={"h1"} size={"xl"} textAlign={"center"} mb={8}
+				<Heading as={"h1"} size={{lg:"xl",sm:"3xl",md:"3xl"}} textAlign={{lg:"center",sm:""}} mb={8}
 				bgGradient={"linear(to-r, cyan.400, blue.500)"}
-				bgClip={"text"}>
+				bgClip={"text"} >
 				Hi there <span className="bg-gradient-to-r from-pink-600 to-purple-700 bg-clip-text">{user.name}</span> enter your prompt to begin your AI Blog generation journey
 				</Heading>
 				<h1>{style}</h1>

@@ -1,5 +1,5 @@
 {
-	"name": "auth-tutorial",
+	"name": "blogwiz",
 	"version": "1.0.0",
 	"description": "",
 	"main": "backend/index.js",
@@ -13,6 +13,7 @@
 	"type": "module",
 	"license": "ISC",
 	"dependencies": {
+		"@huggingface/inference": "^2.8.1",
 		"@react-oauth/google": "^0.12.1",
 		"bcryptjs": "^2.4.3",
 		"cookie-parser": "^1.0.0",
