@@ -21,13 +21,9 @@ import Navbar from "../components/Navbar";
 
 const HomePage = () => {    
    
-    const {user } = useAuthStore();
+    const {user} = useAuthStore();
 	const { fetchProducts, products } = useProductStore();
-    window.onload= function() {
-  Particles.init({
-    selector: '.background'});
-};
-
+    const { isAuthenticated} = useAuthStore();
 
 	return (
 		<div>
@@ -51,7 +47,8 @@ const HomePage = () => {
                         
 					</Link>
                     <br/>
-					<Link to={`/view/${user.name}`} >
+                    {isAuthenticated===true&&(
+                        <Link to={`/view/${user.name}`} >
 			<motion.button
 						whileHover={{ scale: 1.02 }}
 						whileTap={{ scale: 0.98 }}
@@ -59,6 +56,7 @@ const HomePage = () => {
 							View saved outputs
 						</motion.button>
 					</Link>
+                    )}
 
         </div>
         <div class="hidden lg:mt-0 lg:col-span-5 lg:flex">
