@@ -1,6 +1,7 @@
 This is the V1 of the website it has user authentication feature and ability to add blogs for the user.
 AI integration needs to be implemented
-GET AN API KEY FROM HUGGING FACE WHICH IS ABLE TO USE Lllama-3-8B-Instruct
+GET AN API KEY FROM HUGGING FACE WHICH IS ABLE TO USE Lllama-3.2-3B-Instruct
+When trying to run the project make sure to install the node modules in both from and backend
 For Windows users change the dev and start in package.json to "dev"="SET NODE_ENV=development & nodemon backend/index.js" AND 
 "start": "SET NODE_ENV=production & node backend/index.js",
 ### Setup .env file
