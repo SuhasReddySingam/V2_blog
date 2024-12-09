@@ -133,6 +133,7 @@ const CreatePage = () => {
 							name='prompt'
 							value={newPrompt}
 							onChange={(e) => setNewPrompt(e.target.value)}
+							textColor={"white"}
 							/>
 				<br/>
 				<br/>

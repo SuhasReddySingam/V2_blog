@@ -75,16 +75,14 @@ const Navbar = () => {
 						</Link>
 					)}
 					{/* <Avatar name={user.name[0]} ref={btnRef} colorScheme='teal' onClick={onOpen} className="hover:cursor-pointer" /> */}
-
       				<Drawer
         isOpen={isOpen}
         placement='right'
         onClose={onClose}
         finalFocusRef={btnRef}
-		colorScheme="gray"
       >
-        <DrawerOverlay />
-        <DrawerContent>
+        <DrawerOverlay color={"gray.800"} bg={"gray.800"}/>
+        <DrawerContent color={"gray.800"} bg={"gray.800"}>
           <DrawerCloseButton />
           <DrawerHeader>Your Profile</DrawerHeader>
 		  <DrawerBody>
