@@ -1,3 +1,4 @@
+import dotenv from 'dotenv';
 import { Box, Button,  Container, Heading, Input,  useToast, VStack,Text,Textarea,HStack,Stack,Skeleton,SkeletonCircle,SkeletonText} from "@chakra-ui/react";
 import React,{ useState,Component, useRef} from "react";
 import { useProductStore } from "../store/product";
