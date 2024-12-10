@@ -12,6 +12,8 @@ PORT=5000
 JWT_SECRET=your_secret_key
 NODE_ENV=development
 CLIENT_URL= http://localhost:5173
+USERNAME=your accounts user name
+PASS=your accounts app password
 
 ```
 
