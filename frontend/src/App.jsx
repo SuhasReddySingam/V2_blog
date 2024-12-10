@@ -10,8 +10,10 @@ import { useAuthStore } from "./store/authStore";
 import { useEffect } from "react";
 import CreatePage from "./pages/CreatePage";
 import AICreate from "./pages/AICreate"
-import HomePage from "./pages/DashboardPage";
+import EmailVerificationPage from "./pages/EmailVerificationPage";
 import ViewPage from "./pages/ViewPage";
+import ForgotPasswordPage from "./pages/ForgotPasswordPage";
+import ResetPasswordPage from "./pages/ResetPasswordPage";
 
 
 // protect routes that require authentication
@@ -96,6 +98,24 @@ function App() {
 						</RedirectAuthenticatedUser>
 					}
 					/>
+					<Route path='/verify-email' element={<EmailVerificationPage />} />
+				<Route
+					path='/forgot-password'
+					element={
+						<RedirectAuthenticatedUser>
+							<ForgotPasswordPage />
+						</RedirectAuthenticatedUser>
+					}
+				/>
+
+				<Route
+					path='/reset-password/:token'
+					element={
+						<RedirectAuthenticatedUser>
+							<ResetPasswordPage />
+						</RedirectAuthenticatedUser>
+					}
+				/>
 				
 				<Route path='*' element={<Navigate to='/' replace />} />
 			</Routes>

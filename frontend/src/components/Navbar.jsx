@@ -81,8 +81,8 @@ const Navbar = () => {
         onClose={onClose}
         finalFocusRef={btnRef}
       >
-        <DrawerOverlay color={"gray.800"} bg={"gray.800"}/>
-        <DrawerContent color={"gray.800"} bg={"gray.800"}>
+        <DrawerOverlay/>
+        <DrawerContent >
           <DrawerCloseButton />
           <DrawerHeader>Your Profile</DrawerHeader>
 		  <DrawerBody>

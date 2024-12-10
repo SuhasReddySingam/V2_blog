@@ -24,6 +24,7 @@
 		"jwt-decode": "^4.0.0",
 		"mailtrap": "^3.4.0",
 		"mongoose": "^8.5.2",
+		"nodemailer": "^6.9.16",
 		"particlesjs": "^2.2.3",
 		"radio": "^0.2.0",
 		"react-hook-form": "^7.53.2"

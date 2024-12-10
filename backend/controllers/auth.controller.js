@@ -1,10 +1,13 @@
 import bcryptjs from "bcryptjs";
 import crypto from "crypto";
-import dotenv from "dotenv";
-dotenv.config();
+
 import { generateTokenAndSetCookie } from "../utils/generateTokenAndSetCookie.js";
+import {
+	sendPasswordResetEmail,
+	sendResetSuccessEmail,
+	sendVerificationEmail,
+} from "../mailtrap/emails.js";
 import { User } from "../models/user.model.js";
-import { env } from "process";
 
 export const signup = async (req, res) => {
 	const { email, password, name } = req.body;
@@ -23,20 +26,22 @@ export const signup = async (req, res) => {
 		}
 
 		const hashedPassword = await bcryptjs.hash(password, 10);
-
+		const verificationToken = Math.floor(100000 + Math.random() * 900000).toString();
 
 		const user = new User({
 			email,
 			password: hashedPassword,
 			name,
-
-
+			verificationToken,
+			verificationTokenExpiresAt: Date.now() + 24 * 60 * 60 * 1000, // 24 hours
 		});
 
 		await user.save();
 
 		// jwt
 		generateTokenAndSetCookie(res, user._id);
+
+		await sendVerificationEmail(user.email, verificationToken);
 
 		res.status(201).json({
 			success: true,
@@ -67,6 +72,7 @@ export const verifyEmail = async (req, res) => {
 		user.verificationToken = undefined;
 		user.verificationTokenExpiresAt = undefined;
 		await user.save();
+
 
 		res.status(200).json({
 			success: true,
@@ -107,7 +113,6 @@ export const login = async (req, res) => {
 				password: undefined,
 			},
 		});
-	
 	} catch (error) {
 		console.log("Error in login ", error);
 		res.status(400).json({ success: false, message: error.message });
@@ -138,6 +143,7 @@ export const forgotPassword = async (req, res) => {
 		await user.save();
 
 		// send email
+		await sendPasswordResetEmail(user.email, `${process.env.CLIENT_URL}/reset-password/${resetToken}`);
 
 		res.status(200).json({ success: true, message: "Password reset link sent to your email" });
 	} catch (error) {
@@ -168,6 +174,7 @@ export const resetPassword = async (req, res) => {
 		user.resetPasswordExpiresAt = undefined;
 		await user.save();
 
+		await sendResetSuccessEmail(user.email);
 
 		res.status(200).json({ success: true, message: "Password reset successful" });
 	} catch (error) {
