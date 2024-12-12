@@ -137,7 +137,7 @@ const CreatePage = () => {
 							/>
 				<br/>
 				<br/>
-				<h1 className="font-bold text-2xl">Select a writing style</h1>
+				<h1 className="font-bold text-2xl text-white">Select a writing style</h1>
 				<br/>
 				<HStack>
 
@@ -156,7 +156,7 @@ const CreatePage = () => {
 			</div>
 				</HStack>
 				<br/>
-				<h1 className="font-bold text-2xl">Select a wordlimit</h1>
+				<h1 className="font-bold text-2xl text-white">Select a wordlimit</h1>
 				<br/>
 				<HStack>
 

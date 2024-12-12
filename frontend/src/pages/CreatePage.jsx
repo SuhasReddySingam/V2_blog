@@ -41,7 +41,7 @@ const CreatePage = () => {
 		<Navbar />
 
 			<VStack spacing={8}>
-				<Heading as={"h1"} size={"2xl"} textAlign={"center"} mb={8} >
+				<Heading as={"h1"} size={"2xl"} textAlign={"center"} mb={8} textColor={"white"}>
 					Write down your ideas
 				</Heading>
 
