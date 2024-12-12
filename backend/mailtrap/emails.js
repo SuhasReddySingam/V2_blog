@@ -38,7 +38,7 @@ export const sendPasswordResetEmail = async (email, resetURL) => {
 	const recipient = email;
 
 	try {
-		const response=transporter.sendMail({
+		transporter.sendMail({
 			to: recipient,
 			subject:'Reset your password',
 			html:PASSWORD_RESET_REQUEST_TEMPLATE.replace("{resetURL}",resetURL)
@@ -54,12 +54,11 @@ export const sendResetSuccessEmail = async (email) => {
 	const recipient = email;
 
 	try {
-		const response=transporter.sendMail({
+		transporter.sendMail({
 			to: recipient,
 			subject:'Reset your password',
 			html:PASSWORD_RESET_SUCCESS_TEMPLATE
 		});
-		console.log("Password reset email sent successfully", response);
 	} catch (error) {
 		console.error(`Error sending password reset success email`, error);
 
