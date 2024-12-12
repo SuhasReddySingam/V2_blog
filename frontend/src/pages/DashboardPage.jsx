@@ -149,7 +149,7 @@ const HomePage = () => {
                     <h2 class="mb-6 text-sm font-semibold uppercase text-white">Resources</h2>
                     <ul class=" text-gray-400">
                         <li class="mb-4">
-                            <a href="https://huggingface.co/meta-llama/Meta-Llama-3-8B-Instruct" class="hover:underline" target="_blank">Llama-3-8B</a>
+                            <a href="https://huggingface.co/meta-llama/Meta-Llama-3.2-3B-Instruct" class="hover:underline" target="_blank">Llama-3.2-3B</a>
                         </li>
                         <li>
                             <a href="https://tailwindcss.com/" class="hover:underline" target="_blank">Tailwind CSS</a>
